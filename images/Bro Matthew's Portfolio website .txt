@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samuel Matthew (GSM) | Fine Artist</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">GSM</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1 class="hero-title">Samuel <br> <span class="indent">Matthew</span></h1>
+        <p class="hero-subtitle">Pencil Specialist & Fine Artist</p>
+        <div class="scroll-indicator">Explore</div>
+    </header>
+
+    <section class="description-section">
+        <div class="container">
+            <h2 class="reveal-text">Capturing the soul through graphite.</h2>
+            <p class="reveal-p">Samuel Matthew, known professionally as GSM, bridges the gap between reality and paper. Specializing in hyper-realistic pencil work, his art explores the intricate details of human emotion and the subtle beauty of form.</p>
+        </div>
+    </section>
+
+    <section class="gallery-grid">
+        <div class="grid-container">
+            <div class="grid-item tall"><img src="https://via.placeholder.com/600x800" alt="Pencil Sketch 1"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/600x400" alt="Pencil Sketch 2"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/600x400" alt="Fine Art 3"></div>
+            <div class="grid-item tall"><img src="https://via.placeholder.com/600x800" alt="Pencil Sketch 4"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/600x600" alt="Fine Art 5"></div>
+            <div class="grid-item"><img src="https://via.placeholder.com/600x400" alt="Pencil Sketch 6"></div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --bg-color: #f9f9f7;
+    --text-main: #2d2d2d;
+    --accent: #7a7a7a;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 10%;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+}
+
+.indent {
+    margin-left: 4rem;
+    font-style: italic;
+    color: var(--accent);
+}
+
+.hero-subtitle {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+/* Description */
+.description-section {
+    padding: 10rem 10%;
+    max-width: 1200px;
+}
+
+.reveal-text {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.reveal-p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    color: var(--accent);
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    padding: 0 10% 10rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 200px;
+    gap: 20px;
+}
+
+.grid-item {
+    overflow: hidden;
+    background: #eee;
+    border-radius: 4px;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.grid-item:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.tall {
+    grid-row: span 3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
+// 1. Hero Entrance Animation
+window.addEventListener('load', () => {
+    const tl = gsap.timeline();
+
+    tl.from(".hero-title", {
+        y: 100,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power4.out"
+    })
+    .from(".hero-subtitle", {
+        opacity: 0,
+        y: 20,
+        duration: 1
+    }, "-=1");
+});
+
+// 2. Scroll Reveal for Text
+gsap.from(".reveal-text", {
+    scrollTrigger: {
+        trigger: ".reveal-text",
+        start: "top 80%",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 1.2,
+    ease: "power3.out"
+});
+
+gsap.from(".reveal-p", {
+    scrollTrigger: {
+        trigger: ".reveal-p",
+        start: "top 85%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 1.2,
+    delay: 0.2
+});
+
+// 3. Staggered Gallery Reveal
+gsap.from(".grid-item", {
+    scrollTrigger: {
+        trigger: ".grid-container",
+        start: "top 75%",
+    },
+    opacity: 0,
+    scale: 0.9,
+    y: 50,
+    duration: 1,
+    stagger: 0.2, // This creates the "one-by-one" appearance
+    ease: "expo.out"
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////// Cand run Offline //////////
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samuel Matthew (GSM) | Fine Artist</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">GSM</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">Samuel <br> <span class="indent">Matthew</span></h1>
+            <p class="hero-subtitle fade-in-up">Pencil Specialist & Fine Artist</p>
+        </div>
+        <div class="scroll-indicator">Explore</div>
+    </header>
+
+    <section class="description-section scroll-reveal">
+        <div class="container">
+            <h2 class="reveal-item">Capturing the soul through graphite.</h2>
+            <p class="reveal-item">Samuel Matthew, known professionally as GSM, bridges the gap between reality and paper. Specializing in hyper-realistic pencil work, his art explores the intricate details of human emotion.</p>
+        </div>
+    </section>
+
+    <section class="gallery-grid">
+        <div class="grid-container">
+            <div class="grid-item tall scroll-reveal"><img src="images/work1.jpg" alt="Art 1"></div>
+            <div class="grid-item scroll-reveal"><img src="images/work2.jpg" alt="Art 2"></div>
+            <div class="grid-item scroll-reveal"><img src="images/work3.jpg" alt="Art 3"></div>
+            <div class="grid-item tall scroll-reveal"><img src="images/work4.jpg" alt="Art 4"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2026 Samuel Matthew (GSM). All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://instagram.com/samuel_matthew" target="_blank" class="social-text">Instagram</a>
+                <a href="https://twitter.com/samuel_matthew" target="_blank" class="social-text">Twitter</a>
+                <a href="https://facebook.com/samuel_matthew" target="_blank" class="social-text">Facebook</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+/////// CSS STYLING//////////
+
+/* OFFLINE FONTS - Download .woff2 files and link them here */
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('fonts/PlayfairDisplay-Bold.woff2') format('woff2');
+    font-weight: bold;
+}
+
+:root {
+    --bg-color: #f9f9f7;
+    --text-main: #2d2d2d;
+    --accent: #7a7a7a;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Arial', sans-serif; /* Fallback to Arial if fonts aren't downloaded yet */
+}
+
+/* ... (Previous layout styles remain the same) ... */
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333; /* Fallback color */
+    /* Update path to your local image */
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                      url('images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    animation: zoomOut 3s ease-out forwards;
+}
+
+/* Updated Social Links for Offline (Text based for simplicity) */
+.social-text {
+    color: #f9f9f7;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.social-text:hover {
+    color: #aaa;
+    border-bottom: 1px solid #aaa;
+}
+
+/* Keyframes and Scroll Reveal */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease-out;
+}
+
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+
+
+
+/////// JAVASCRIPT////////
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Check if the user is scrolling to reveal elements
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    revealElements.forEach(el => observer.observe(el));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////HEALTH SECTOR PAGE //////////
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Sector | Pro Career Hub</title>
+    <link rel="stylesheet" href="sector-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">PRO<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html" class="active">Explore</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#" class="btn-primary">Sign In</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sector-nav">
+        <div class="container sector-slider-wrapper">
+            <div class="slide-indicator left">❮</div>
+            <div class="sector-items">
+                <button class="sector-btn active">Health & Medicine</button>
+                <button class="sector-btn">Technology</button>
+                <button class="sector-btn">Business & Finance</button>
+                <button class="sector-btn">Engineering</button>
+                <button class="sector-btn">Education</button>
+                <button class="sector-btn">Art & Design</button>
+                <button class="sector-btn">Law & Justice</button>
+                <button class="sector-btn">Agriculture</button>
+                <button class="sector-btn">Media & Comm</button>
+            </div>
+            <div class="slide-indicator right">❯</div>
+        </div>
+    </div>
+
+    <header class="sector-header">
+        <div class="container">
+            <h1>Healthcare <span>Sector</span></h1>
+            <p>Exploring 20 of the most impactful professions dedicated to human wellness and medical innovation.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="profession-grid">
+            
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71f1e3c77c?auto=format&fit=crop&w=400&q=80" alt="Medicine">
+                <div class="card-content">
+                    <span class="card-tag">Clinical</span>
+                    <h3>Medicine & Surgery</h3>
+                    <p>Diagnosis, treatment, and operative care for patients.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 14%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="medicine-profile.html" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?auto=format&fit=crop&w=400&q=80" alt="Pharmacy">
+                <div class="card-content">
+                    <span class="card-tag">Pharmaceutical</span>
+                    <h3>Pharmacy</h3>
+                    <p>Expertise in drug therapy and medication management.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 25%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=400&q=80" alt="Nursing">
+                <div class="card-content">
+                    <span class="card-tag">Clinical</span>
+                    <h3>Nursing Science</h3>
+                    <p>Holistic patient care and clinical health support.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 10%</span>
+                        <span>Entry: Degree/Cert</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1579154273821-ad3c14c48958?auto=format&fit=crop&w=400&q=80" alt="Lab Science">
+                <div class="card-content">
+                    <span class="card-tag">Diagnostic</span>
+                    <h3>Medical Lab Science</h3>
+                    <p>Analyzing biological samples for diagnostic data.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 40%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=400&q=80" alt="Physiotherapy">
+                <div class="card-content">
+                    <span class="card-tag">Rehabilitation</span>
+                    <h3>Physiotherapy</h3>
+                    <p>Restoring movement and function through physical therapy.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 5%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1581093458791-9f3c3250bb8b?auto=format&fit=crop&w=400&q=80" alt="Biomedical">
+                <div class="card-content">
+                    <span class="card-tag">Engineering</span>
+                    <h3>Biomedical Engineer</h3>
+                    <p>Designing technology to improve medical care.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 15%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=400&q=80" alt="Dentistry">
+                <div class="card-content">
+                    <span class="card-tag">Surgical</span>
+                    <h3>Dentistry</h3>
+                    <p>Specialized care for oral health and dental surgery.</p>
+                    <div class="card-stats">
+                        <span>AI Risk: 12%</span>
+                        <span>Entry: Degree</span>
+                    </div>
+                    <a href="#" class="view-btn">View Profession</a>
+                </div>
+            </div>
+
+            </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Pro Platform. Explore the future of global industries.</p>
+    </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+////////// STYLING /////////////
+
+/* Core Styling */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #333; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* Navbar Primary */
+.navbar { height: 80px; display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; background: #fff; position: sticky; top: 0; z-index: 1000; }
+.navbar .container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.logo { font-size: 1.8rem; font-weight: 700; }
+.logo span { color: #007bff; }
+.nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+.nav-links a { text-decoration: none; color: #555; font-weight: 500; }
+.nav-links a.active { color: #007bff; }
+.btn-primary { background: #333; color: #fff !important; padding: 0.6rem 1.2rem; border-radius: 8px; }
+
+/* Sector Slider Navbar */
+.sector-nav { background: #fff; border-bottom: 1px solid #f0f0f0; padding: 0.75rem 0; position: sticky; top: 80px; z-index: 999; }
+.sector-slider-wrapper { display: flex; align-items: center; gap: 10px; position: relative; }
+.sector-items { display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; white-space: nowrap; -ms-overflow-style: none; scrollbar-width: none; }
+.sector-items::-webkit-scrollbar { display: none; }
+
+.sector-btn { 
+    background: #f5f5f5; border: none; padding: 0.6rem 1.2rem; border-radius: 50px; 
+    color: #666; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.3s;
+}
+.sector-btn:hover { background: #007bff; color: #fff; }
+.sector-btn.active { background: #007bff; color: #fff; }
+.slide-indicator { color: #999; cursor: pointer; font-size: 1.2rem; padding: 0 5px; }
+
+/* Header */
+.sector-header { padding: 4rem 0 3rem; text-align: center; }
+.sector-header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
+.sector-header h1 span { color: #007bff; }
+.sector-header p { color: #666; max-width: 600px; margin: 0 auto; }
+
+/* Career Cards Grid */
+.profession-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding-bottom: 5rem; }
+
+.career-card { 
+    background: #fff; border: 1px solid #f0f0f0; border-radius: 15px; overflow: hidden; 
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.career-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+.career-card img { width: 100%; height: 180px; object-fit: cover; }
+
+.card-content { padding: 1.5rem; }
+.card-tag { font-size: 0.7rem; font-weight: 700; color: #007bff; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem; }
+.card-content h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #111; }
+.card-content p { font-size: 0.9rem; color: #666; height: 40px; overflow: hidden; margin-bottom: 1.2rem; }
+
+.card-stats { display: flex; justify-content: space-between; border-top: 1px solid #f9f9f9; padding-top: 1rem; margin-bottom: 1.2rem; }
+.card-stats span { font-size: 0.75rem; color: #888; font-weight: 600; }
+
+.view-btn { 
+    display: block; width: 100%; text-align: center; text-decoration: none; 
+    background: #f8fbff; color: #007bff; font-weight: 700; font-size: 0.85rem; 
+    padding: 0.8rem; border-radius: 8px; border: 1px solid #eef4ff; transition: 0.3s;
+}
+.view-btn:hover { background: #007bff; color: #fff; }
+
+/* Footer */
+.footer { padding: 4rem 0; text-align: center; border-top: 1px solid #f0f0f0; color: #aaa; font-size: 0.9rem; }
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .sector-header h1 { font-size: 2.2rem; }
+    .nav-links { display: none; }
+}
